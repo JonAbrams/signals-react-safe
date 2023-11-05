@@ -8,6 +8,7 @@ import {
   untracked,
 } from "@preact/signals-core";
 import { useSignalValue } from "./hooks";
+import { ReactElement } from "react";
 
 export {
   signal,
@@ -37,3 +38,7 @@ Object.defineProperties(Signal.prototype, {
   },
   ref: { configurable: true, value: null },
 });
+
+declare module "@preact/signals-core" {
+  interface Signal extends ReactElement {}
+}
