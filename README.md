@@ -6,6 +6,8 @@ The team provides a react compatibility library (signals-react)[[@preact/signals
 
 This library still lets you get the biggest benefit of Signals. When you render a signal directly within your JSX/TSX it creates a text node that updates when the signal updates, skipping the re-render of the component you render it within.
 
+[Live editable demo](https://stackblitz.com/edit/stackblitz-starters-dzzy2b?file=src%2FCounter.tsx)
+
 ## Install
 
 ```bash
