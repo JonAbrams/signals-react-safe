@@ -1,0 +1,41 @@
+{
+  "name": "signals-react-safe",
+  "version": "1.0.0",
+  "description": "A version of Preact Signals that integrates with React without touching React's internals. Allows Signals to be safely used with Next.js 13+'s App Router.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonAbrams/signals-react-safe.git"
+  },
+  "keywords": [
+    "react",
+    "signals",
+    "nextjs"
+  ],
+  "author": "Jon Abrams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JonAbrams/signals-react-safe/issues"
+  },
+  "homepage": "https://github.com/JonAbrams/signals-react-safe#readme",
+  "dependencies": {
+    "@preact/signals-core": "^1.5.0"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.8",
+    "react": ">=16.8"
+  },
+  "devDependencies": {
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  }
+}
