@@ -16,7 +16,7 @@ import {signal} from 'signals-react-safe';
 export counter = signal(0);
 ```
 
-`Counter.tsx`
+`Counter.tsx` (this component does NOT re-render when the signal updates, which is more performant)
 
 ```tsx
 import { counter } from "./mySignals";
@@ -31,7 +31,7 @@ export function Counter() {
 }
 ```
 
-`MixedCounter.tsx`
+`MixedCounter.tsx` (this component does re-render when the signal updates, which allows the value to be combined with non-signal values)
 
 ```tsx
 import { useState } from "react";
