@@ -1,7 +1,23 @@
-import { Signal } from "@preact/signals-core";
+import {
+  Signal,
+  signal,
+  computed,
+  effect,
+  batch,
+  type ReadonlySignal,
+  untracked,
+} from "@preact/signals-core";
 import { useSignalValue } from "./hooks";
 
-export * from "@preact/signals-core";
+export {
+  signal,
+  computed,
+  effect,
+  batch,
+  Signal,
+  type ReadonlySignal,
+  untracked,
+};
 export * from "./hooks";
 
 const ReactElemType = Symbol.for("react.element"); // https://github.com/facebook/react/blob/346c7d4c43a0717302d446da9e7423a8e28d8996/packages/shared/ReactSymbols.js#L15
