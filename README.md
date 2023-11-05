@@ -76,3 +76,5 @@ Created by [Jon Abrams](https://threads.net/jon.abrams) (2023)
 # Attributions
 
 Contains code from [Preact Signals](https://github.com/preactjs/signals)
+
+Idea inspired by [satoshi-cyber](https://github.com/satoshi-cyber)'s [suggestion](https://github.com/vercel/next.js/issues/45054#issuecomment-1694791734).
