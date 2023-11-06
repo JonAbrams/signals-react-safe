@@ -6,7 +6,7 @@ The team provides a react compatibility library (signals-react)[[@preact/signals
 
 This library still lets you get the biggest benefit of Signals. When you render a signal directly within your JSX/TSX it creates a text node that updates when the signal updates, skipping the re-render of the component you render it within.
 
-[Live editable demo](https://stackblitz.com/edit/signals-react-safe-demo?file=src%2FCounter.tsx)
+[Live editable demo](https://codesandbox.io/s/signals-react-safe-demo-jmcwst?file=/src/Counter.tsx)
 
 ## Install
 
