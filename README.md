@@ -2,7 +2,7 @@
 
 [Signals]([@preact/signals](https://github.com/preactjs/signals)) is a state management library from the Preact team.
 
-The team provides a react compatibility library (signals-react)[https://github.com/preactjs/signals/tree/main/packages/react], but it comes with a very large downside: It alters React's internals. This is a [big no-no](https://github.com/facebook/react/issues/26704#issuecomment-1522044060) for mainting compatibility with future versions of React, creating risk for your project. It also breaks compatibility with [Next.js](https://nextjs.org/), which is a pretty good and popular React framework.
+The team provides a react compatibility library [signals-react](https://github.com/preactjs/signals/tree/main/packages/react), but it comes with a very large downside: It alters React's internals. This is a [big no-no](https://github.com/facebook/react/issues/26704#issuecomment-1522044060) for mainting compatibility with future versions of React, creating risk for your project. It also breaks compatibility with [Next.js](https://nextjs.org/), which is a pretty good and popular React framework.
 
 This library still lets you get the biggest benefit of Signals. When you render a signal directly within your JSX/TSX it creates a text node that updates when the signal updates, skipping the re-render of the component you render it within.
 
