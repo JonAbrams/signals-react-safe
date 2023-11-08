@@ -69,6 +69,8 @@ This library provides a bunch of exported function:
 - Copy/pasted hooks from [@preact/signals-react](https://github.com/preactjs/signals/blob/main/packages/react): `useSignal`, `useComputed`, `useSignalEffect`.
 - New hooks unique to this library: `useSignalValue`, `useSignalAndValue`, `useComputedValue`.
 
+The new hooks that directly return values will trigger re-renders of the component. This would also happen if you read a signal's value inside a component. If you want to avoid that re-render, place your signal directly in your JSX.
+
 # Author
 
 Created by [Jon Abrams](https://threads.net/jon.abrams) (2023)
