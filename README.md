@@ -69,7 +69,69 @@ This library provides a bunch of exported function:
 - Copy/pasted hooks from [@preact/signals-react](https://github.com/preactjs/signals/blob/main/packages/react): `useSignal`, `useComputed`, `useSignalEffect`.
 - New hooks unique to this library: `useSignalValue`, `useSignalAndValue`, `useComputedValue`.
 
-The new hooks that directly return values will trigger re-renders of the component. This would also happen if you read a signal's value inside a component. If you want to avoid that re-render, place your signal directly in your JSX.
+### `useSignalValue(signal)`
+
+Takes as input an existing signal, typically imported into your module from elsewhere in your app. If you want your component to create its own signal, use [`useSignal`](https://github.com/preactjs/signals/tree/main/packages/react#hooks) instead.
+
+It returns the value stored in the signal. When the signal's value changes, this hook will trigger a component re-render and return the new value.
+
+Use this hook when you need to access the value stored in the signal, e.g. triggering a useEffect, or combining with non-signal values.
+
+If you want to combine the value with other signal values, consider using `useComputed` or `useComputedValue` to be more performant.
+
+Example:
+```tsx
+import {count} from '../signals';
+function Count() {
+  const countValue = useSignalValue(count);
+  useEffect(() => {
+    localStorage['count'] = `#{countValue}`;
+  }, [countValue]);
+  return <div>{count} <button onClick={() => count.value++}>Add one</button></div>
+}
+```
+
+### `useSignalAndValue`
+
+Creates a signal and returns it, along with its value. Triggers a component re-render in order to return the latest value. Use this to replace `useSignal` if you need to read the value of a component's signal within the component.
+
+It returns an array with two elements:
+1. The signal.
+2. Its value.
+
+Example: 
+```tsx
+function MyCounter() {
+  const [count, countValue] = useSignalAndValue(0);
+  useEffect(() => {
+    localStorage['count'] = `#{countValue}`;
+  }, [countValue]);
+  return <div>{count} <button onClick={() => count.value++}>Add one</button></div>;
+}
+```
+
+### `useComputedValue`
+
+Take a function as its parameter and returns a value. It's useful when that function uses multiple signals. 
+
+A new value will be generated if any of the referenced signals are updated, causing the component to re-render.
+
+Example:
+```tsx
+import {count} from '../signals';
+function MyMultiplier() {
+  const multiplier = useSignal(1);
+  const multipliedValue = useComputedValue(() => multiplier.value * count.value);
+  useEffect(() => {
+    localStorage['multiplied'] = `#{multipliedValue}`;
+  }, [countValue]);
+  return <div>{multiplier} <button onClick={() => multiplier.value++}>Add one</button></div>;
+}
+```
+
+# Performance
+
+The new hooks that directly return values will trigger re-renders of the component. This would also happen if you read a signal's value inside a component when using [@preact/signals-react](https://github.com/preactjs/signals/tree/main/packages/react). If you want to avoid that re-render, place your signal directly in your JSX.
 
 # Author
 
