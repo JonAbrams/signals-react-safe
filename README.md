@@ -6,7 +6,7 @@ The team provides a react compatibility library [signals-react](https://github.c
 
 This library still lets you get the biggest benefit of Signals. When you render a signal directly within your JSX/TSX it creates a text node that updates when the signal updates, skipping the re-render of the component you render it within.
 
-But… when using this library you would now nneed to use one of the [new hooks](#api) for reading the value of a signal directly. So instead of reading `mySignal.value` somewhere in your component, use `useSignalValue(mySignal)` instead.
+But… when using this library you would now need to use one of the [new hooks](#api) for reading the value of a signal directly. So instead of reading `mySignal.value` somewhere in your component, use `useSignalValue(mySignal)` instead.
 
 IMHO, this is also helps readibility since it makes it more clear what can cause a component to re-render.
 
