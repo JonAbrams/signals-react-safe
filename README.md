@@ -25,7 +25,7 @@ npm install signals-react-safe
 ```ts
 import { signal } from 'signals-react-safe';
 
-export counter = signal(0);
+export const counter = signal(0);
 ```
 
 `Counter.tsx` (this component does NOT re-render when the signal updates, which is more performant)
