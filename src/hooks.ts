@@ -1,41 +1,100 @@
 import { Signal, computed, effect } from "@preact/signals-core";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export function useSignalValue<T>(signal: Signal<T>): T {
-  const [state, setState] = useState<T>(signal.value);
+type NotSignal<T> = T extends Signal ? never : T;
+
+/**
+ * Creates a signal for your component.
+ * @param initialData Initial value of the signal.
+ * @param skipRenders If true, the signal will not trigger re-renders on updates.
+ * @returns A new signal for your component.
+ * @version 2.0.0
+ * @see https://github.com/JonAbrams/signals-react-safe
+ */
+export function useSignal<T>(
+  initialData: NotSignal<T>,
+  skipRenders?: boolean
+): Signal<T>;
+
+/**
+ * Listens to the given signal(s) to re-render your component on updates.
+ * @param signals Signals to listen to for re-renders.
+ * @returns void
+ * @version 2.0.0
+ * @see https://github.com/JonAbrams/signals-react-safe
+ */
+export function useSignal<T extends Signal[]>(...signals: T): void;
+
+export function useSignal<T>(
+  data: T | Signal,
+  skipRenders?: boolean | Signal,
+  ...rest: Signal[]
+) {
+  // If the first parameter is a signal, this hook's sole purpose is to
+  // trigger re-renders on signal updates.
+  // The rest of the parameters are then assumed to also be signals.
+  const [, setState] = useState<any[]>([]);
+  const allSignals = [data] as Signal[];
+  if (skipRenders) allSignals.push(skipRenders as Signal, ...rest);
   useEffect(() => {
-    return effect(() => setState(signal.value));
+    if (!(data instanceof Signal)) return;
+    return effect(() => {
+      const allValues = allSignals.map((signal) => signal.value);
+      setState(allValues);
+    });
+  }, [...allSignals]);
+
+  // // Otherwise, the first parameter is the initial value of a new signal to be returned.
+  const [signal] = useState(() => new Signal<T>(data as T));
+  const [, setValue] = useState<T>(signal.value);
+  useEffect(() => {
+    if (data instanceof Signal) return;
+    return effect(() => {
+      if (skipRenders) return;
+      setValue(signal.value);
+    });
   }, [signal]);
-  return state;
+
+  return data instanceof Signal ? void 0 : signal;
 }
 
-export function useSignalAndValue<T>(initialValue: T): [Signal<T>, T] {
-  const signal = useSignal(initialValue);
-  const value = useSignalValue<T>(signal);
-  return [signal, value];
-}
-
-export function useComputedValue<T>(compute: () => T): T {
-  const signal = useComputed(compute);
-  const value = useSignalValue(signal);
-  return value;
-}
-
-// Following hooks taken from https://github.com/preactjs/signals/blob/main/packages/react/runtime/src/index.ts
-export function useSignal<T>(initialValue: T): Signal<T> {
-  return useMemo(() => new Signal<T>(initialValue), []);
-}
-
-export function useComputed<T>(compute: () => T): Signal<T> {
+/**
+ * Creates a computed signal for your component.
+ * @param compute A callback that returns a value based on other signals' values.
+ * @param skipRender If true, the signal will not trigger re-renders on updates.
+ * @returns The computed signal.
+ * @version 2.0.0
+ * @see https://github.com/JonAbrams/signals-react-safe
+ */
+export function useComputed<T>(
+  compute: () => T,
+  skipRender?: boolean
+): Signal<T> {
   const $compute = useRef(compute);
   $compute.current = compute;
-  return useMemo(() => computed<T>(() => $compute.current()), []);
+  const memoizedComputed = useMemo(
+    () => computed<T>(() => $compute.current()),
+    []
+  );
+  const [, setValue] = useState<T>();
+  useEffect(() => {
+    return effect(() => {
+      if (skipRender) return;
+      setValue(compute());
+    });
+  }, [memoizedComputed]);
+  return memoizedComputed;
 }
 
+/**
+ * Executes the given callback and re-executes it on update of any referenced signals.
+ * @param cb Callback to execute. Have your callback return an additional callback to clean up on component unmount.
+ * @version 2.0.0
+ * @see https://github.com/JonAbrams/signals-react-safe
+ */
 export function useSignalEffect(cb: () => void | (() => void)): void {
   const callback = useRef(cb);
   callback.current = cb;
-
   useEffect(() => {
     return effect(() => callback.current());
   }, []);
