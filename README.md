@@ -1,14 +1,14 @@
 # signals-react-safe
 
-[Signals]([@preact/signals](https://github.com/preactjs/signals)) is a state management library from the Preact team.
+[Signals]([@preact/signals](https://github.com/preactjs/signals)) is a state management library from the Preact team. This is a _safer_ alternative library.
 
 The team provides a react compatibility library [signals-react](https://github.com/preactjs/signals/tree/main/packages/react), but it comes with a very large downside: It alters React's internals. This is a [big no-no](https://github.com/facebook/react/issues/26704#issuecomment-1522044060) for mainting compatibility with future versions of React, creating risk for your project. It also breaks compatibility with [Next.js](https://nextjs.org/), which is a pretty good and popular React framework.
 
 This library still lets you get the biggest benefit of Signals. When you render a signal directly within your JSX/TSX it creates a text node that updates when the signal updates, skipping the re-render of the component you render it within.
 
-But… when using this library you would now need to use one of the [new hooks](#api) for reading the value of a signal directly. So instead of reading `mySignal.value` somewhere in your component, use `useSignalValue(mySignal)` instead.
+This library provides [new hooks](#api) for reading the value of a signal in your React components. Instead of reading `mySignal.value` somewhere in your component, use `useSignalValue(mySignal)` instead.
 
-IMHO, this is also helps readibility since it makes it more clear what can cause a component to re-render.
+IMHO, this is also helps readibility since it makes it more clear what can cause a component to re-render, and works better with hooks such as useEffect.
 
 [Live editable demo](https://codesandbox.io/s/signals-react-safe-demo-jmcwst?file=/src/Counter.tsx)
 
