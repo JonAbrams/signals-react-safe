@@ -1,7 +1,7 @@
-import { Signal, computed, effect } from "@preact/signals-core";
+import { ReadonlySignal, Signal, computed, effect } from "@preact/signals-core";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export function useSignalValue<T>(signal: Signal<T>): T {
+export function useSignalValue<T>(signal: ReadonlySignal<T>): T {
   const [state, setState] = useState<T>(signal.value);
   useEffect(() => {
     return effect(() => setState(signal.value));
