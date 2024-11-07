@@ -1,6 +1,6 @@
 {
   "name": "signals-react-safe",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "A version of Preact Signals that integrates with React without touching React's internals. Allows Signals to be safely used with Next.js 13+'s App Router.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
